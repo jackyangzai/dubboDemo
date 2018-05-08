@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wonder.dao.UserDao">
+    <select id="findAllUser" parameterType="map" resultType="map">
+        select
+        id,username,loginname,password,role,status
+        from
+        user_emp
+        where loginname like concat(concat('%',#{key}),'%')
+        order by ${sortField} ${sortOrder}
+    </select>
+
+</mapper>

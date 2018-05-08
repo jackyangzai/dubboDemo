@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="com.wonder.controller"/>
+
+
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix"
+                  value="/WEB-INF/jsp/"/>
+        <property name="suffix"
+                  value=".jsp"/>
+    </bean>
+    <!--<import resource="classpath:META-INF/spring/dubbo-user.xml" />-->
+
+    <dubbo:application name="demo-consumer"/>
+
+    <dubbo:registry id="zk1" address="127.0.0.1:2181" protocol="zookeeper"/>
+    <dubbo:consumer registry="zk1"/>
+
+    <dubbo:reference interface="com.wonder.service.UserService" id="userService"/>
+</beans>
