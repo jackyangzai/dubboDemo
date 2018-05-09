@@ -20,14 +20,13 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    //跳转到用户列表页面
     @RequestMapping("/userList.do")
     public String toUserList(){
-//        List<Map> list =  userService.findAllUser();
-//        for(Map map : list){
-//            System.out.println(map);
-//        }
         return "userList";
     }
+
+    //用户查询
     @ResponseBody
     @RequestMapping(value = "/getUserData.do",method = RequestMethod.POST,produces = "text/html; charset=utf-8")
     public String findAllUser(HttpServletRequest request, HttpServletResponse response){
@@ -42,8 +41,6 @@ public class UserController {
         String sortOrder = request.getParameter("sortOrder");
         HashMap map = userService.findAllUser(key,pageIndex,pageSize,sortField,sortOrder);
         JSONSerializer serializer = new JSONSerializer();
-        String json = serializer.deepSerialize(map);
-//        System.out.println(json);
-        return json;
+        return serializer.deepSerialize(map);
     }
 }
